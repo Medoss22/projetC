@@ -63,31 +63,21 @@ void saveAccountToCSV(const Account *account, const char *filename) {
 void modifyAcc(Account account[]) 
 {
     int a;
-    printf("1: modifier le nom\n");
-    printf("2: modifier le prenom\n");
-    printf("3: modifier l'adresse\n");
-    printf("4: modifier l'email\n");
-    printf("5: modifier le telephone\n");
+    printf("1: modifier l'adresse\n");
+    printf("2: modifier l'email\n");
+    printf("3: modifier le telephone\n");
     scanf("%d", &a);
     switch (a)
     {
     case 1:
-        printf("entre le nouveau nome: \n");
-        scanf("%s", account->last_name);
-        break;
-    case 2:
-        printf("entre le nouveau prenome: \n");
-        scanf("%s", account->first_name);
-        break;
-    case 3:
         printf("entre le nouveau adresse: \n");
         scanf("%s", account->address);
         break;
-    case 4:
+    case 2:
         printf("entre le nouveau email: \n");
         scanf("%s", account->email);
         break;
-    case 5:
+    case 3:
         printf("entre le nouveau telephone: \n");
         scanf("%s", account->phone);
         break;
@@ -108,20 +98,16 @@ void modifyAccCSV(Account account[], char changement[], char filename[], char nu
     }
     FILE* file2 = fopen("temp.csv", "w"); // fichier temporaire pour stocker les modifications
     char ligne[300];
-    int modi = 0;
     while (fgets(ligne, sizeof(ligne), file))
     {
         char words[100];
-        sscanf(ligne, "%49[^,]", words);
-        int updated = 0;
+        sscanf(ligne, "%49[^,]", words); //extrait la ligne et on le compare avec la structure acc
         for (int i = 0; i < num_copmte; i++) 
         {
             if (strcmp(words, account->account_number) == 0) 
             {
                 // Si le num compte correspond, écrivez le compte mis à jour dans le fichier temporaire
                 fprintf(file2, "%s,%s,%s\n", account[i].account_number, account[i].last_name, account[i].balance);
-                updated = 1;
-                modi = 1;
                 break;
             }
         }
