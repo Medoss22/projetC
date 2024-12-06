@@ -58,3 +58,74 @@ void saveAccountToCSV(const Account *account, const char *filename) {
 
     fclose(file);
 }
+
+//fonction qui permete de modifier un compte client
+void modifyAcc(Account account[]) 
+{
+    int a;
+    printf("1: modifier le nom\n");
+    printf("2: modifier le prenom\n");
+    printf("3: modifier l'adresse\n");
+    printf("4: modifier l'email\n");
+    printf("5: modifier le telephone\n");
+    scanf("%d", &a);
+    switch (a)
+    {
+    case 1:
+        printf("entre le nouveau nome: \n");
+        scanf("%s", account->last_name);
+        break;
+    case 2:
+        printf("entre le nouveau prenome: \n");
+        scanf("%s", account->first_name);
+        break;
+    case 3:
+        printf("entre le nouveau adresse: \n");
+        scanf("%s", account->address);
+        break;
+    case 4:
+        printf("entre le nouveau email: \n");
+        scanf("%s", account->email);
+        break;
+    case 5:
+        printf("entre le nouveau telephone: \n");
+        scanf("%s", account->phone);
+        break;
+    default:
+        printf("choix non valable");
+        break;
+    }
+}
+
+//modifier le compte dans le fichier CSV
+void modifyAccCSV(Account account[], char changement[], char filename[], char num_copmte[30])
+{
+    FILE *file = fopen(filename, "r"); // Ouvre le fichier en mode lecture
+    if (file == NULL)
+    {
+        printf("Impossible d'ouvrir le fichier %s\n", filename);
+        return;
+    }
+    FILE* file2 = fopen("temp.csv", "w"); // fichier temporaire pour stocker les modifications
+    char ligne[300];
+    int modi = 0;
+    while (fgets(ligne, sizeof(ligne), file))
+    {
+        char words[100];
+        sscanf(ligne, "%49[^,]", words);
+        int updated = 0;
+        for (int i = 0; i < num_copmte; i++) 
+        {
+            if (strcmp(words, account->account_number) == 0) 
+            {
+                // Si le num compte correspond, écrivez le compte mis à jour dans le fichier temporaire
+                fprintf(file2, "%s,%s,%s\n", account[i].account_number, account[i].last_name, account[i].balance);
+                updated = 1;
+                modi = 1;
+                break;
+            }
+        }
+    }
+    fclose(file);
+    fclose(file2);
+}
