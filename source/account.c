@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "account.h"
+#define taille_maximalle 1000;
+
 
 // Fichier CSV pour stocker les comptes
 #define ACCOUNT_FILE "data/accounts.csv"
@@ -88,7 +90,7 @@ void modifyAcc(Account account[])
 }
 
 //modifier le compte dans le fichier CSV
-void modifyAccCSV(Account account[], char changement[], char filename[], char num_copmte[30])
+void modifyAccCSV(Account account[], char changement[], char filename[], int num_copmte[30])
 {
     FILE *file = fopen(filename, "r"); // Ouvre le fichier en mode lecture
     if (file == NULL)
@@ -115,3 +117,30 @@ void modifyAccCSV(Account account[], char changement[], char filename[], char nu
     fclose(file);
     fclose(file2);
 }
+
+
+//supp
+void delete_client(Account account[],char num,char File_name[]){
+	int t=0;
+	char ligne[taille_maximalle];
+	FILE*fichier; 
+	FILE*temp;
+	
+	fichier = fopen(File_name,"r");
+	temp = fopen("temp.txt","w");
+	
+	while(fgets(ligne,taille_maximalle,fichier )){
+		sscanf(ligne,"%d",&num);
+		if(strcmp(num,account->account_number!=0){
+		 fprintf(temp,"%d",ligne);
+		else
+		 t = 1;}
+	}
+	fclose(fichier);	 fclose(temp);
+	    if(t){
+    	remove(File_name);
+    	rename("temp.txt",File_name);
+    	printf("le compte est supprime.\n");}
+	    else 
+	    printf("le compte n'existe pas :( !!!");  
+} 
