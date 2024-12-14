@@ -1,14 +1,13 @@
+# Variables
 CC = gcc
-CFLAGS = -Iinclude -Wall
+CFLAGS = -Wall -Wextra -I.  # Inclure le répertoire actuel pour les fichiers .h
+TARGET = bank_manager
+SRCS = main.c account.c transactions.c utils.c
 
-SRC = $(wildcard src/*.c)      # Trouve tous les fichiers .c dans src/
-OBJ = $(SRC:.c=.o)            # Remplace l'extension .c par .o
+# Règle principale
+$(TARGET): $(SRCS)
+	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)
 
-banking_system.exe: $(OBJ)
-	$(CC) -o banking_system.exe $(OBJ)
-
-src/%.o: src/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
+# Règle pour nettoyer les fichiers générés
 clean:
-	del /Q src\*.o bank_manage.exe
+	rm -f $(TARGET)

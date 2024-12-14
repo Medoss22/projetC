@@ -62,31 +62,39 @@ void saveAccountToCSV(const Account *account, const char *filename) {
 }
 
 //fonction qui permete de modifier un compte client
-void modifyAcc(Account account[]) 
+void modifyAcc(int num_acc) 
 {
+    Account account;
     int a;
-    printf("1: modifier l'adresse\n");
-    printf("2: modifier l'email\n");
-    printf("3: modifier le telephone\n");
-    scanf("%d", &a);
-    switch (a)
+    if (num_acc == account.account_number)
     {
-    case 1:
-        printf("entre le nouveau adresse: \n");
-        scanf("%s", account->address);
-        break;
-    case 2:
-        printf("entre le nouveau email: \n");
-        scanf("%s", account->email);
-        break;
-    case 3:
-        printf("entre le nouveau telephone: \n");
-        scanf("%s", account->phone);
-        break;
-    default:
-        printf("choix non valable");
-        break;
+        printf("1: modifier l'adresse\n");
+        printf("2: modifier l'email\n");
+        printf("3: modifier le telephone\n");
+        scanf("%d", &a);
+        switch (a)
+        {
+        case 1:
+            printf("entre le nouveau adresse: \n");
+            scanf("%s", account.address);
+            break;
+        case 2:
+            printf("entre le nouveau email: \n");
+            scanf("%s", account.email);
+            break;
+        case 3:
+            printf("entre le nouveau telephone: \n");
+            scanf("%s", account.phone);
+            break;
+        default:
+            printf("choix non valable");
+            break;
+        }
     }
+    else
+    {
+        printf("compte inexistant");
+    }  
 }
 
 //modifier le compte dans le fichier CSV
@@ -120,21 +128,22 @@ void modifyAccCSV(Account account[], char changement[], char filename[], int num
 
 
 //supp
-void delete_client(Account account[],char num,char File_name[]){
+void delete_client(char num, char File_name[]){
+    Account account;
 	int t=0;
-	char ligne[taille_maximalle];
+	char ligne[1000];
 	FILE*fichier; 
 	FILE*temp;
 	
 	fichier = fopen(File_name,"r");
 	temp = fopen("temp.txt","w");
 	
-	while(fgets(ligne,taille_maximalle,fichier )){
+	while(fgets(ligne,1000,fichier )){
 		sscanf(ligne,"%d",&num);
-		if(strcmp(num,account->account_number!=0){
-		 fprintf(temp,"%d",ligne);
+		if(strcmp(num,account.account_number!=0)){
+		 fprintf(temp,"%d",ligne);}
 		else
-		 t = 1;}
+		t = 1;
 	}
 	fclose(fichier);	 fclose(temp);
 	    if(t){
@@ -144,3 +153,29 @@ void delete_client(Account account[],char num,char File_name[]){
 	    else 
 	    printf("le compte n'existe pas :( !!!");  
 } 
+
+
+/*
+void delete_client(int num, char File_name[]){
+    Account account;
+	int t=0, acc_num;
+	char ligne[1000];
+	FILE*fichier = fopen(File_name, "r"); 
+	FILE*temp = fopen("temp.txt", "w");
+	while(fgets(ligne, sizeof(ligne), fichier )){
+	    sscanf(ligne, "%d", &acc_num);
+		if(acc_num != num){
+		    fprintf(temp,"%d",ligne);}
+		else
+		    t = 1;
+	}
+	fclose(fichier);	 
+    fclose(temp);
+	if(t){
+    	remove(File_name);
+    	rename("temp.txt",File_name);
+    	printf("le compte est supprime.\n");}
+	 else 
+	    printf("le compte n'existe pas :( !!!");  
+} 
+*/
