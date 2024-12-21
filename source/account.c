@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "account.h"
+#include "fonction.h"
 
 
 // Fichier CSV pour stocker les comptes
@@ -160,7 +160,7 @@ void delete_client(char num, char File_name[]){
 	FILE* temp;
 	
 	fichier = fopen(File_name,"r");
-	temp = fopen("temp.txt","w");
+	temp = fopen("temp.CSV","w");
 	
 	while(fgets(ligne,taille_maximalle,fichier )){
 		sscanf(ligne,"%d",&num);

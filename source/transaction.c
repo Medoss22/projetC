@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <string.h>
-#include "account.h"
+#include "fonction.h"
 
-void transfert(Account *account1, Account *account2, float ST, char file_name[])  //ST c'est solde a transferer, account1 c'est source
+void transfert(Account *account1, Account *account2, char file_name[])  
 {
+    float ST;
+    printf("Donner le montant %f a deposer dans le compte de numero %d: ", ST, account2->account_number); //ST c'est solde a transferer, account1 c'est source
+    scanf("%f",&ST);
     if (account1->balance > ST && ST > 0)
     {
         account1->balance = account1->balance - ST; //Retirer de l'argent du account1
@@ -26,7 +29,11 @@ void transfert(Account *account1, Account *account2, float ST, char file_name[])
 }
 
 // effectuer un dépôt
-void makeDeposit(Account account, float montant, char file_name[]) {
+void makeDeposit(Account account, char file_name[]) {
+    float montant;
+    printf("Donner le montant %f a deposer dans votre compte de numero %d: ", montant, account.account_number);
+    scanf("%f",&montant);
+
     if (montant > 0) {
         account.balance += montant;
         printf("depot de %.3f effectué avec succès :) pour le compte %d !!\n", montant,account.account_number);
@@ -43,3 +50,4 @@ void makeDeposit(Account account, float montant, char file_name[]) {
     fprintf(f, "depot de %.3f pour le compte %d est effectuer.\n", montant,account.account_number);
     fclose(f);
 }
+

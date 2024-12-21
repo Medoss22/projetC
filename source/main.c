@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "account.h"
+#include "fonction.h"
 
 void showMenu() {
     printf("\n=== Menu de gestion bancaire ===\n");
