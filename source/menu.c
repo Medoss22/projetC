@@ -18,11 +18,10 @@ void recherche()
     }
     printf("Entrez le nom du compte à rechercher : ");
     scanf("%s", nom);
-    printf("Entrez l'ID du compte à rechercher : ");
+    printf("Entrez l'Id du compte à rechercher : ");
     scanf("%d", &Id);
     while (fgets(ligne, sizeof(ligne), fichier) != NULL)
     {
-        
     }
 }
 
