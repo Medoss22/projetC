@@ -29,9 +29,6 @@ int main() {
             scanf("%d", &num_acc);
             modifyAcc(num_acc);
             break;
-        case 3:
-            printf("Au revoir !\n");
-            exit(0);
         default:
             printf("Choix invalide, veuillez réessayer.\n");
         }

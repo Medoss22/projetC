@@ -1,5 +1,7 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
+#define taille_maximalle 1000
+
 
 typedef struct {
     int account_number;

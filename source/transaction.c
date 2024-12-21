@@ -2,7 +2,7 @@
 #include <string.h>
 #include "account.h"
 
-float transfert(Account *account1, Account *account2, float ST, char file_name[])  //ST c'est solde a transferer, account1 c'est source
+void transfert(Account *account1, Account *account2, float ST, char file_name[])  //ST c'est solde a transferer, account1 c'est source
 {
     if (account1->balance > ST && ST > 0)
     {
@@ -19,9 +19,27 @@ float transfert(Account *account1, Account *account2, float ST, char file_name[]
     if (f == NULL)
     {
         printf("Impossible d'ouvrir le fichier\n");
-        return 0;
+        return;
     }
     fprintf(f, "Transfert de %.2f du compte %s vers le compte %s est effectuer.\n", ST, account1->account_number, account2->account_number);
     fclose(f);
-    return 0;
+}
+
+// effectuer un dépôt
+void makeDeposit(Account account, float montant, char file_name[]) {
+    if (montant > 0) {
+        account.balance += montant;
+        printf("depot de %.3f effectué avec succès :) pour le compte %d !!\n", montant,account.account_number);
+        printf("Nouveau solde : %.3f\n", account.balance);
+    } else {
+        printf("Le montant du dépôt doit être positif :( .\n");
+    }
+    FILE* f = fopen(file_name, "a");
+    if (f == NULL)
+    {
+        printf("Impossible d'ouvrir le fichier\n");
+        return;
+    }
+    fprintf(f, "depot de %.3f pour le compte %d est effectuer.\n", montant,account.account_number);
+    fclose(f);
 }

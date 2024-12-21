@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "account.h"
-#define taille_maximalle 1000;
 
 
 // Fichier CSV pour stocker les comptes
@@ -61,6 +60,28 @@ void saveAccountToCSV(const Account *account, const char *filename) {
     fclose(file);
 }
 
+//affichier les listes de compte
+void displayaccounts(  const char name_file[]){
+    FILE*file=fopen(name_file,"r");
+    if(file==NULL){
+            printf("erreur:impossible d'ouvrir le fichier %s \n",name_file);
+return ;} 
+Account account;
+printf("\n Liste des comptes enregistrés:\n");
+printf("-------------------------------------------------------------------------------------------------------------------\n");
+printf("Numéro de compte|Nom|Prénom|Solde|Email|Statut du compte\n");
+printf("--------------------------------------------------------------------------------------------------------------------\n");
+while(fscanf(file,"%d,%49[^,],%49[^,],%f,%49[^,],%9[^,]\n",&account.account_number,account.last_name,account.first_name,account.address,account.email
+,account.phone,account.balance,account.status)==8){
+    printf("%d|%s|%s|%8.3f|%s|%s\n",account.account_number,account.last_name,account.first_name,account.address,account.email,account.phone,account.balance,account.status);
+
+    printf("--------------------------------------------------------------------------------------------------------------------\n");
+}
+fclose(file);
+}
+
+
+
 //fonction qui permete de modifier un compte client
 void modifyAcc(int num_acc) 
 {
@@ -97,6 +118,9 @@ void modifyAcc(int num_acc)
     }  
 }
 
+
+
+
 //modifier le compte dans le fichier CSV
 void modifyAccCSV(Account account[], char changement[], char filename[], int num_copmte[30])
 {
@@ -111,7 +135,7 @@ void modifyAccCSV(Account account[], char changement[], char filename[], int num
     while (fgets(ligne, sizeof(ligne), file))
     {
         char words[100];
-        sscanf(ligne, "%49[^,]", words); //extrait la ligne et on le compare avec la structure acc
+        sscanf(ligne, "%[^,]", words); //extrait la ligne et on le compare avec la structure acc
         for (int i = 0; i < num_copmte; i++) 
         {
             if (strcmp(words, account->account_number) == 0) 
@@ -127,18 +151,18 @@ void modifyAccCSV(Account account[], char changement[], char filename[], int num
 }
 
 
-//supp
+//supprimer un compte 
 void delete_client(char num, char File_name[]){
     Account account;
 	int t=0;
-	char ligne[1000];
-	FILE*fichier; 
-	FILE*temp;
+	char ligne[taille_maximalle];
+	FILE* fichier; 
+	FILE* temp;
 	
 	fichier = fopen(File_name,"r");
 	temp = fopen("temp.txt","w");
 	
-	while(fgets(ligne,1000,fichier )){
+	while(fgets(ligne,taille_maximalle,fichier )){
 		sscanf(ligne,"%d",&num);
 		if(strcmp(num,account.account_number!=0)){
 		 fprintf(temp,"%d",ligne);}
@@ -153,29 +177,3 @@ void delete_client(char num, char File_name[]){
 	    else 
 	    printf("le compte n'existe pas :( !!!");  
 } 
-
-
-/*
-void delete_client(int num, char File_name[]){
-    Account account;
-	int t=0, acc_num;
-	char ligne[1000];
-	FILE*fichier = fopen(File_name, "r"); 
-	FILE*temp = fopen("temp.txt", "w");
-	while(fgets(ligne, sizeof(ligne), fichier )){
-	    sscanf(ligne, "%d", &acc_num);
-		if(acc_num != num){
-		    fprintf(temp,"%d",ligne);}
-		else
-		    t = 1;
-	}
-	fclose(fichier);	 
-    fclose(temp);
-	if(t){
-    	remove(File_name);
-    	rename("temp.txt",File_name);
-    	printf("le compte est supprime.\n");}
-	 else 
-	    printf("le compte n'existe pas :( !!!");  
-} 
-*/
