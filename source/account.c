@@ -176,4 +176,92 @@ void delete_client(char num, char File_name[]){
     	printf("le compte est supprime.\n");}
 	    else 
 	    printf("le compte n'existe pas :( !!!");  
-} 
+}
+
+//de trier les comptes dans le fishier CSV par solde
+void trier_compe(char File_name[])
+{
+    Account account;
+    int t=0,bl; 
+    char ligne[taille_maximalle];
+    FILE* fichier = fopen(File_name,"r");
+    FILE* temp = fopen("temp.CSV","w"); // le fishier dans le quelle on peut stockee les comte trier
+
+    while(fgets(ligne,taille_maximalle,fichier ))
+    {
+        sscanf(ligne,"%d",&account.account_number); 
+        sscanf(ligne,"%s",&account.last_name); 
+        sscanf(ligne,"%s",&account.first_name); 
+        sscanf(ligne,"%d",&account.balance); 
+        if(t==0) 
+        {
+            fprintf(temp,"%d",account.account_number);
+            fprintf(temp,"%s",account.last_name);
+            fprintf(temp,"%s",account.first_name);
+            fprintf(temp,"%d",account.balance);
+            t=1;
+        }
+        else
+        {
+            if(account.balance>account.balance) 
+            {
+                fprintf(temp,"%d",account.account_number);
+                fprintf(temp,"%s",account.last_name);
+                fprintf(temp,"%s",account.first_name);
+                fprintf(temp,"%d",account.balance);
+            }
+            else
+            {
+                fprintf(temp,"%d",account.account_number);
+                fprintf(temp,"%s",account.last_name);
+                fprintf(temp,"%s",account.first_name);
+                fprintf(temp,"%d",account.balance);
+            }
+        }
+    }
+    fclose(fichier);
+    fclose(temp);
+    remove(File_name);
+    rename("temp.CSV",File_name);
+}
+// hadchi mriid
+void trier_compte(char *File_name)
+{
+    Account account;
+    FILE* fichier = fopen(File_name,"r");
+    FILE* temp = fopen("temp.CSV","w");
+    char ligne[100][100], T[100];
+    int L = 0,B1 ,B2;
+    while(fgets(ligne[L], sizeof(ligne[L]), fichier)) //stocke les lignes de fichier dans un tableau
+    {
+        L++;
+    }
+    fclose(fichier);
+    for (int i = 0; i < L - 1; i++)
+    {
+        for (int j = i + 1; j < L; j++)
+        {
+           sscanf(ligne[i],"%d",&account.account_number);
+           sscanf(ligne[i],"%s",&account.last_name);
+           sscanf(ligne[i],"%s",&account.first_name);
+           sscanf(ligne[i],"%d",&B1);
+           sscanf(ligne[j],"%d",&account.account_number);
+           sscanf(ligne[j],"%s",&account.last_name);
+           sscanf(ligne[j],"%s",&account.first_name);
+           sscanf(ligne[j],"%d",&B2);
+           if(B1>B2)
+           {
+            strcpy(T,ligne[i]);
+            strcpy(ligne[i],ligne[j]);
+            strcpy(ligne[j],T);
+           }
+        }
+    }
+    for (int i = 0; i < L; i++)
+    {
+        fprintf(temp,"%s",ligne[i]);
+    }
+    fclose(temp);
+    remove(File_name);
+    rename("temp.CSV",File_name);
+}
